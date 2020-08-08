@@ -1,19 +1,10 @@
 package main
 
 import (
-	"errors"
 	"flag"
-	"fmt"
-	"io/ioutil"
 	"log"
 	"math/rand"
-	"os"
-	"os/exec"
-	"path/filepath"
 	"strings"
-	"time"
-
-	"github.com/otiai10/copy"
 )
 
 var (
@@ -36,103 +27,23 @@ func main() {
 	kagPath := flag.String("kag", "", "-kag [Kag Path]")
 	flag.Parse()
 
-	err := copy.Copy(
-		*sourceDir,
-		*destinationDir,
-		copy.Options{
-			Skip: func(src string) (bool, error) {
-				return strings.HasPrefix(src, ".") || strings.HasSuffix(src, ".git"), nil
-			},
-		},
-	)
-	if err != nil {
-		log.Fatalf("failed to copy: %v", err)
-	}
-
-	if *autoconfigPath == "" {
+	if flag.NFlag() > 0 {
+		err := deploy(deployParameters{
+			sourceDir:          *sourceDir,
+			destinationDir:     *destinationDir,
+			autoconfigPath:     *autoconfigPath,
+			gamemode:           *gamemode,
+			rconPassword:       *rconPassword,
+			randomRconPassword: *randomRconPassword,
+			serverName:         *serverName,
+			serverInfo:         *serverInfo,
+			kagPath:            *kagPath,
+		})
+		if err != nil {
+			log.Fatalf("error on deploying: %v", err)
+		}
 		return
 	}
-
-	if *gamemode == "" {
-		log.Fatalln(errors.New("gamemode not specified"))
-	}
-
-	if *kagPath == "" {
-		log.Fatalln(errors.New("kag executable not specified"))
-	}
-
-	kagDir := filepath.Dir(*kagPath)
-
-	autoconfigFile, err := ioutil.ReadFile(*autoconfigPath)
-	if err != nil {
-		log.Fatalf("failed to read autoconfig file: %v", err)
-	}
-
-	lines := strings.Split(string(autoconfigFile), "\n")
-	for i, line := range lines {
-		if strings.Contains(line, "sv_gamemode") {
-			lines[i] = fmt.Sprintf("sv_gamemode = %s", *gamemode)
-			continue
-		}
-		if *rconPassword != "" && strings.Contains(line, "sv_rconpassword") {
-			lines[i] = fmt.Sprintf("sv_rconpassword = %s", *rconPassword)
-			continue
-		}
-		if *randomRconPassword && strings.Contains(line, "sv_rconpassword") {
-			rand.Seed(time.Now().UnixNano())
-			password := generatePassword(6, 0, 2, 2)
-			log.Printf("sv_rconpassword = %s", password)
-			lines[i] = fmt.Sprintf("sv_rconpassword = %s", password)
-			continue
-		}
-		if *serverName != "" && strings.Contains(line, "sv_name") {
-			lines[i] = fmt.Sprintf("sv_name = %s", *serverName)
-			continue
-		}
-		if *serverInfo != "" && strings.Contains(line, "sv_info") {
-			lines[i] = fmt.Sprintf("sv_info = %s", *serverInfo)
-			continue
-		}
-	}
-	output := strings.Join(lines, "\n")
-	err = ioutil.WriteFile(*autoconfigPath, []byte(output), 0644)
-	if err != nil {
-		log.Fatalf("failed to write autoconfig file: %v", err)
-	}
-
-	modsFilePath := fmt.Sprintf("%s%c%s", kagDir, os.PathSeparator, "mods.cfg")
-	modsFile, err := ioutil.ReadFile(modsFilePath)
-	if err != nil {
-		log.Fatalf("failed to read mods file: %v", err)
-	}
-
-	lines = strings.Split(string(modsFile), "\n")
-	for i, line := range lines {
-		if !strings.HasPrefix(line, "#") {
-			lines[i] = fmt.Sprintf("# %s", line)
-			continue
-		}
-	}
-	lines = append(lines, *gamemode)
-	output = strings.Join(lines, "\n")
-	err = ioutil.WriteFile(modsFilePath, []byte(output), 0644)
-	if err != nil {
-		log.Fatalf("failed to write mods.cfg file: %v", err)
-	}
-
-	cmd := exec.Cmd{
-		Dir:    kagDir,
-		Path:   *kagPath,
-		Stdout: os.Stdout,
-	}
-	err = cmd.Run()
-	if err != nil {
-		log.Printf("error running KAG executable: %s", err)
-	}
-}
-
-func errorCheck(err error) {
-	log.Fatalln(err)
 }
 
 func generatePassword(passwordLength, minSpecialChar, minNum, minUpperCase int) string {
