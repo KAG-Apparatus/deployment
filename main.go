@@ -4,8 +4,14 @@ import (
 	"flag"
 	"log"
 	"math/rand"
+	"os"
 	"strings"
+
+	"github.com/gotk3/gotk3/glib"
+	"github.com/gotk3/gotk3/gtk"
 )
+
+const appID = "com.github.KAG-Apparatus.deployment"
 
 var (
 	lowerCharSet   = "abcdedfghijklmnopqrst"
@@ -13,6 +19,11 @@ var (
 	specialCharSet = "!@#$%&*"
 	numberSet      = "0123456789"
 	allCharSet     = lowerCharSet + upperCharSet + specialCharSet + numberSet
+
+	application *gtk.Application
+	builder     *gtk.Builder
+	mainWindow  *gtk.ApplicationWindow
+	params      deployParameters
 )
 
 func main() {
@@ -44,6 +55,56 @@ func main() {
 		}
 		return
 	}
+
+	// Create a new application.
+	var err error
+	application, err = gtk.ApplicationNew(appID, glib.APPLICATION_FLAGS_NONE)
+	errorCheck(err)
+
+	// Connect function to application startup event, this is not required.
+	application.Connect("startup", func() {
+		log.Println("application startup")
+	})
+
+	// Connect function to application activate event
+	application.Connect("activate", func() {
+		log.Println("application activate")
+
+		// Get the GtkBuilder UI definition in the glade file.
+		builder, err = gtk.BuilderNewFromFile("resources/gui/main.glade")
+		errorCheck(err)
+
+		// Get the object with the id of "main_window".
+		obj, err := builder.GetObject("main_window")
+		errorCheck(err)
+		// Verify that the object is a pointer to a gtk.ApplicationWindow.
+		mainWindow, err = isWindow(obj)
+		errorCheck(err)
+
+		// Map the handlers to callback functions, and connect the signals
+		// to the Builder.
+		signals := map[string]interface{}{
+			"on_main_window_destroy":          onMainWindowDestroy,
+			"on_button_dev_folder_clicked":    onButtonDevFolderClicked,
+			"on_file_chooser_dialog_delete":   onFileChooserDialogDelete,
+			"on_button_ok_dev_folder_clicked": onButtonOkFolderClicked,
+			"button_cancel_dev_folder":        onButtonCancelFolderClicked,
+		}
+		builder.ConnectSignals(signals)
+
+		// Show the Window and all of its components.
+		//mainWindow.Maximize()
+		mainWindow.Show()
+		application.AddWindow(mainWindow)
+	})
+
+	// Connect function to application shutdown event, this is not required.
+	application.Connect("shutdown", func() {
+		log.Println("Application finished.")
+	})
+
+	// Launch the application
+	os.Exit(application.Run(os.Args))
 }
 
 func generatePassword(passwordLength, minSpecialChar, minNum, minUpperCase int) string {
