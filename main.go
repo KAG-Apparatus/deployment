@@ -6,12 +6,25 @@ import (
 	"math/rand"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/gotk3/gotk3/glib"
 	"github.com/gotk3/gotk3/gtk"
 )
 
 const appID = "com.github.KAG-Apparatus.deployment"
+
+type selection int
+
+const (
+	source selection = iota
+	destination
+	autoconfig
+	kag
+
+	open
+	save
+)
 
 var (
 	lowerCharSet   = "abcdedfghijklmnopqrst"
@@ -39,7 +52,7 @@ func main() {
 	flag.Parse()
 
 	if flag.NFlag() > 0 {
-		err := deploy(deployParameters{
+		cmd, err := deploy(deployParameters{
 			sourceDir:          *sourceDir,
 			destinationDir:     *destinationDir,
 			autoconfigPath:     *autoconfigPath,
@@ -52,6 +65,11 @@ func main() {
 		})
 		if err != nil {
 			log.Fatalf("error on deploying: %v", err)
+		}
+		cmd.Stdout = os.Stdout
+		err = cmd.Run()
+		if err != nil {
+			log.Printf("error running KAG executable: %s", err)
 		}
 		return
 	}
@@ -84,11 +102,18 @@ func main() {
 		// Map the handlers to callback functions, and connect the signals
 		// to the Builder.
 		signals := map[string]interface{}{
-			"on_main_window_destroy":          onMainWindowDestroy,
-			"on_button_dev_folder_clicked":    onButtonDevFolderClicked,
-			"on_file_chooser_dialog_delete":   onFileChooserDialogDelete,
-			"on_button_ok_dev_folder_clicked": onButtonOkFolderClicked,
-			"button_cancel_dev_folder":        onButtonCancelFolderClicked,
+			"on_main_window_destroy":            onMainWindowDestroy,
+			"on_menu_item_open":                 onMenuItemOpen,
+			"on_button_source":                  onButtonSource,
+			"on_button_destination":             onButtonDestination,
+			"on_button_autoconfig":              onButtonAutoconfig,
+			"on_button_kag":                     onButtonKAG,
+			"on_switch_rcon":                    onSwitchRCON,
+			"on_entry_name":                     onEntryName,
+			"on_entry_info":                     onEntryInfo,
+			"on_button_deploy":                  onButtonDeploy,
+			"on_file_chooser_dialog_delete":     onFileChooserDialogDelete,
+			"on_text_view_output_size_allocate": onTextViewOutputSizeAllocate,
 		}
 		builder.ConnectSignals(signals)
 
@@ -108,6 +133,8 @@ func main() {
 }
 
 func generatePassword(passwordLength, minSpecialChar, minNum, minUpperCase int) string {
+	rand.Seed(time.Now().UnixNano())
+
 	var password strings.Builder
 
 	//Set special character

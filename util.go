@@ -166,3 +166,17 @@ func isFileChooserDialog(obj glib.IObject) (*gtk.FileChooserDialog, error) {
 	}
 	return nil, errors.New("not a *gtk.FileChooserDialog")
 }
+
+func isTextBuffer(obj glib.IObject) (*gtk.TextBuffer, error) {
+	if textBuffer, ok := obj.(*gtk.TextBuffer); ok {
+		return textBuffer, nil
+	}
+	return nil, errors.New("not a *gtk.TextBuffer")
+}
+
+func isTextView(obj glib.IObject) (*gtk.TextView, error) {
+	if textView, ok := obj.(*gtk.TextView); ok {
+		return textView, nil
+	}
+	return nil, errors.New("not a *gtk.TextView")
+}

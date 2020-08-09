@@ -10,6 +10,172 @@
     <property name="icon_name">applications-games-symbolic</property>
     <property name="icon_size">6</property>
   </object>
+  <object class="GtkImage" id="image2">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">folder-open-symbolic</property>
+  </object>
+  <object class="GtkImage" id="image3">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">folder-open-symbolic</property>
+  </object>
+  <object class="GtkImage" id="image4">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">document-open-symbolic</property>
+  </object>
+  <object class="GtkImage" id="image5">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">utilities-terminal-symbolic</property>
+  </object>
+  <object class="GtkImage" id="image6">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">window-close-symbolic</property>
+  </object>
+  <object class="GtkImage" id="image7">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">emblem-ok-symbolic</property>
+  </object>
+  <object class="GtkFileChooserDialog" id="folder_chooser">
+    <property name="can_focus">False</property>
+    <property name="window_position">center</property>
+    <property name="icon_name">folder-open-symbolic</property>
+    <property name="type_hint">dialog</property>
+    <property name="action">select-folder</property>
+    <signal name="delete-event" handler="on_file_chooser_dialog_delete" swapped="no"/>
+    <child internal-child="vbox">
+      <object class="GtkBox">
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox">
+            <property name="can_focus">False</property>
+            <property name="layout_style">end</property>
+            <child>
+              <object class="GtkButton" id="button1">
+                <property name="label" translatable="yes">Cancel</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="image">image6</property>
+                <signal name="clicked" handler="on_button_cancel_dev_folder_clicked" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="button2">
+                <property name="label" translatable="yes">Ok</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="image">image7</property>
+                <signal name="clicked" handler="on_button_ok_dev_folder_clicked" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="-6">button1</action-widget>
+      <action-widget response="-5">button2</action-widget>
+    </action-widgets>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
+  </object>
+  <object class="GtkImage" id="image8">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">window-close-symbolic</property>
+  </object>
+  <object class="GtkImage" id="image9">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">emblem-ok-symbolic</property>
+  </object>
+  <object class="GtkFileChooserDialog" id="file_chooser">
+    <property name="can_focus">False</property>
+    <property name="window_position">center</property>
+    <property name="icon_name">folder-open-symbolic</property>
+    <property name="type_hint">dialog</property>
+    <child internal-child="vbox">
+      <object class="GtkBox">
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox">
+            <property name="can_focus">False</property>
+            <property name="layout_style">end</property>
+            <child>
+              <object class="GtkButton" id="button3">
+                <property name="label" translatable="yes">Cancel</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="image">image8</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="button4">
+                <property name="label" translatable="yes">Ok</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="image">image9</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="-6">button3</action-widget>
+      <action-widget response="-5">button4</action-widget>
+    </action-widgets>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
+  </object>
+  <object class="GtkTextBuffer" id="textbuffer_output"/>
   <object class="GtkApplicationWindow" id="main_window">
     <property name="width_request">800</property>
     <property name="height_request">600</property>
@@ -45,19 +211,21 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkMenuItem">
+                      <object class="GtkMenuItem" id="menu_item_open">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Open</property>
                         <property name="use_underline">True</property>
+                        <signal name="activate" handler="on_menu_item_open" swapped="no"/>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkMenuItem">
+                      <object class="GtkMenuItem" id="menu_item_save">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Save</property>
                         <property name="use_underline">True</property>
+                        <signal name="activate" handler="on_menu_item_save" swapped="no"/>
                       </object>
                     </child>
                     <child>
@@ -141,7 +309,7 @@
                         <property name="can_focus">False</property>
                         <property name="spacing">6</property>
                         <child>
-                          <object class="GtkEntry" id="entry_dev_folder">
+                          <object class="GtkEntry" id="entry_src">
                             <property name="width_request">250</property>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
@@ -155,13 +323,13 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkButton" id="button_dev_folder">
+                          <object class="GtkButton" id="button_source">
                             <property name="label" translatable="yes">Browse</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
                             <property name="image">image2</property>
-                            <signal name="clicked" handler="on_button_dev_folder_clicked" swapped="no"/>
+                            <signal name="clicked" handler="on_button_source" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -182,7 +350,7 @@
                         <property name="can_focus">False</property>
                         <property name="spacing">6</property>
                         <child>
-                          <object class="GtkEntry">
+                          <object class="GtkEntry" id="entry_dst">
                             <property name="width_request">250</property>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
@@ -196,12 +364,13 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkButton">
+                          <object class="GtkButton" id="button_destination">
                             <property name="label" translatable="yes">Browse</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
                             <property name="image">image3</property>
+                            <signal name="clicked" handler="on_button_destination" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -222,7 +391,7 @@
                         <property name="can_focus">False</property>
                         <property name="spacing">6</property>
                         <child>
-                          <object class="GtkEntry">
+                          <object class="GtkEntry" id="entry_autoconfig">
                             <property name="width_request">250</property>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
@@ -236,12 +405,13 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkButton">
+                          <object class="GtkButton" id="button_autoconfig">
                             <property name="label" translatable="yes">Browse</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
                             <property name="image">image4</property>
+                            <signal name="clicked" handler="on_button_autoconfig" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -257,11 +427,12 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEntry">
+                      <object class="GtkEntry" id="entry_gamemode">
                         <property name="width_request">250</property>
                         <property name="visible">True</property>
-                        <property name="can_focus">True</property>
+                        <property name="can_focus">False</property>
                         <property name="halign">start</property>
+                        <property name="editable">False</property>
                         <property name="placeholder_text" translatable="yes">Game mode</property>
                       </object>
                       <packing>
@@ -276,7 +447,7 @@
                         <property name="can_focus">False</property>
                         <property name="spacing">6</property>
                         <child>
-                          <object class="GtkEntry">
+                          <object class="GtkEntry" id="entry_rcon">
                             <property name="width_request">250</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -305,9 +476,10 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkSwitch">
+                              <object class="GtkSwitch" id="switch_rcon">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
+                                <signal name="state-set" handler="on_switch_rcon" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -330,12 +502,13 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEntry">
+                      <object class="GtkEntry" id="entry_name">
                         <property name="width_request">250</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="halign">start</property>
                         <property name="placeholder_text" translatable="yes">Server name</property>
+                        <signal name="changed" handler="on_entry_name" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -344,12 +517,13 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEntry">
+                      <object class="GtkEntry" id="entry_info">
                         <property name="width_request">250</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="halign">start</property>
                         <property name="placeholder_text" translatable="yes">Server info</property>
+                        <signal name="changed" handler="on_entry_info" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -363,7 +537,7 @@
                         <property name="can_focus">False</property>
                         <property name="spacing">6</property>
                         <child>
-                          <object class="GtkEntry">
+                          <object class="GtkEntry" id="entry_kag">
                             <property name="width_request">250</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -377,12 +551,13 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkButton">
+                          <object class="GtkButton" id="button_kag">
                             <property name="label" translatable="yes">Browse</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
                             <property name="image">image5</property>
+                            <signal name="clicked" handler="on_button_kag" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -398,7 +573,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton">
+                      <object class="GtkButton" id="button_deploy">
                         <property name="label" translatable="yes">Deploy</property>
                         <property name="width_request">120</property>
                         <property name="height_request">32</property>
@@ -408,6 +583,7 @@
                         <property name="halign">start</property>
                         <property name="image">image1</property>
                         <property name="image_position">right</property>
+                        <signal name="clicked" handler="on_button_deploy" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -429,7 +605,7 @@
                     <property name="orientation">vertical</property>
                     <property name="spacing">6</property>
                     <child>
-                      <object class="GtkLabel">
+                      <object class="GtkLabel" id="label_output">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Output:</property>
@@ -452,11 +628,14 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <child>
-                              <object class="GtkTextView" id="text_view1">
+                              <object class="GtkTextView" id="text_view_output">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="editable">False</property>
                                 <property name="cursor_visible">False</property>
+                                <property name="buffer">textbuffer_output</property>
+                                <property name="monospace">True</property>
+                                <signal name="size-allocate" handler="on_text_view_output_size_allocate" swapped="no"/>
                               </object>
                             </child>
                           </object>
@@ -466,6 +645,67 @@
                         <property name="expand">False</property>
                         <property name="fill">True</property>
                         <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkGrid">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="row_spacing">6</property>
+                        <property name="column_spacing">6</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Server memory usage:</property>
+                            <property name="xalign">0</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">0</property>
+                            <property name="top_attach">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLevelBar" id="leval_bar_memory">
+                            <property name="width_request">120</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="max_value">100</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="top_attach">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Server CPU usage:</property>
+                            <property name="xalign">0</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">0</property>
+                            <property name="top_attach">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLevelBar" id="leval_bar_cpu">
+                            <property name="width_request">120</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="max_value">100</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="top_attach">1</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">2</property>
                       </packing>
                     </child>
                   </object>
@@ -484,21 +724,6 @@
             <property name="position">1</property>
           </packing>
         </child>
-        <child>
-          <object class="GtkLabel" id="label_status">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="xpad">6</property>
-            <property name="ypad">6</property>
-            <property name="label" translatable="yes">Everything ok.</property>
-            <property name="xalign">0</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">2</property>
-          </packing>
-        </child>
       </object>
     </child>
     <child type="titlebar">
@@ -509,95 +734,6 @@
         <property name="subtitle" translatable="yes">Deployment</property>
         <property name="show_close_button">True</property>
       </object>
-    </child>
-  </object>
-  <object class="GtkImage" id="image2">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="icon_name">folder-open-symbolic</property>
-  </object>
-  <object class="GtkImage" id="image3">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="icon_name">folder-open-symbolic</property>
-  </object>
-  <object class="GtkImage" id="image4">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="icon_name">document-open-symbolic</property>
-  </object>
-  <object class="GtkImage" id="image5">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="icon_name">utilities-terminal-symbolic</property>
-  </object>
-  <object class="GtkImage" id="image6">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="icon_name">window-close-symbolic</property>
-  </object>
-  <object class="GtkImage" id="image7">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="icon_name">emblem-ok-symbolic</property>
-  </object>
-  <object class="GtkFileChooserDialog" id="dev_folder_chooser">
-    <property name="can_focus">False</property>
-    <property name="window_position">center</property>
-    <property name="icon_name">folder-open-symbolic</property>
-    <property name="type_hint">dialog</property>
-    <property name="action">select-folder</property>
-    <signal name="delete-event" handler="on_file_chooser_dialog_delete" swapped="no"/>
-    <child internal-child="vbox">
-      <object class="GtkBox">
-        <property name="can_focus">False</property>
-        <property name="orientation">vertical</property>
-        <property name="spacing">2</property>
-        <child internal-child="action_area">
-          <object class="GtkButtonBox">
-            <property name="can_focus">False</property>
-            <property name="layout_style">end</property>
-            <child>
-              <object class="GtkButton" id="button_cancel_dev_folder">
-                <property name="label" translatable="yes">Cancel</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="image">image6</property>
-                <signal name="clicked" handler="on_button_cancel_dev_folder_clicked" swapped="no"/>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="button_ok_dev_folder">
-                <property name="label" translatable="yes">Ok</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="image">image7</property>
-                <signal name="clicked" handler="on_button_ok_dev_folder_clicked" swapped="no"/>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-      </object>
-    </child>
-    <child type="titlebar">
-      <placeholder/>
     </child>
   </object>
 </interface>

@@ -5,12 +5,10 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"math/rand"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
-	"time"
 
 	"github.com/otiai10/copy"
 )
@@ -27,9 +25,9 @@ type deployParameters struct {
 	kagPath            string
 }
 
-func deploy(params deployParameters) error {
+func deploy(params deployParameters) (*exec.Cmd, error) {
 	if params.sourceDir == "" || params.destinationDir == "" {
-		return fmt.Errorf("you must specify source and destination")
+		return nil, fmt.Errorf("you must specify source and destination")
 	}
 
 	err := copy.Copy(
@@ -42,19 +40,19 @@ func deploy(params deployParameters) error {
 		},
 	)
 	if err != nil {
-		return fmt.Errorf("failed to copy: %v", err)
+		return nil, fmt.Errorf("failed to copy: %v", err)
 	}
 
 	if params.autoconfigPath == "" {
-		return nil
+		return nil, nil
 	}
 
 	if params.gamemode == "" {
-		return errors.New("gamemode not specified")
+		return nil, errors.New("gamemode not specified")
 	}
 
 	if params.kagPath == "" {
-		return errors.New("kag executable not specified")
+		return nil, errors.New("kag executable not specified")
 	}
 
 	kagDir := filepath.Dir(params.kagPath)
@@ -75,7 +73,6 @@ func deploy(params deployParameters) error {
 			continue
 		}
 		if params.randomRconPassword && strings.Contains(line, "sv_rconpassword") {
-			rand.Seed(time.Now().UnixNano())
 			password := generatePassword(6, 0, 2, 2)
 			log.Printf("sv_rconpassword = %s", password)
 			lines[i] = fmt.Sprintf("sv_rconpassword = %s", password)
@@ -116,14 +113,9 @@ func deploy(params deployParameters) error {
 		log.Fatalf("failed to write mods file: %v", err)
 	}
 
-	cmd := exec.Cmd{
-		Dir:    kagDir,
-		Path:   params.kagPath,
-		Stdout: os.Stdout,
+	cmd := &exec.Cmd{
+		Dir:  kagDir,
+		Path: params.kagPath,
 	}
-	err = cmd.Run()
-	if err != nil {
-		log.Printf("error running KAG executable: %s", err)
-	}
-	return nil
+	return cmd, nil
 }
